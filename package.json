@@ -1,7 +1,7 @@
 {
   "name": "quicker-routes",
   "version": "1.0.0",
-  "description": "",
+  "description": "Route optimization for Shopify local deliveries.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
