@@ -17,5 +17,20 @@
   "bugs": {
     "url": "https://github.com/MlkMahmud/quicker-routes/issues"
   },
-  "homepage": "https://github.com/MlkMahmud/quicker-routes#readme"
+  "homepage": "https://github.com/MlkMahmud/quicker-routes#readme",
+  "dependencies": {
+    "@shopify/app-bridge": "^1.27.2",
+    "@shopify/app-bridge-react": "^1.27.2",
+    "@shopify/koa-shopify-auth": "^3.1.70",
+    "@shopify/koa-shopify-webhooks": "^2.5.0",
+    "@shopify/polaris": "^5.3.1",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^9.4.0",
+    "koa-session": "^6.0.0",
+    "next": "^9.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "shopify-api-node": "^3.4.4"
+  }
 }
