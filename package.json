@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build:next": "next build",
-    "build:server": "babel server --out-dir dist --extensions \".ts\"",
+    "build:server": "babel server --out-dir dist",
     "build": "npm-run-all build:*",
-    "lint:src": "eslint . --fix --ext .ts,tsx -c .eslintrc.json",
-    "lint:types": "tsc",
-    "lint": "npm-run-all lint:*"
+    "dev": "cross-env NODE_ENV=development babel-node -r dotenv/config server/",
+    "lint": "eslint . --fix --ext .js,jsx -c .eslintrc.json",
+    "start": "cross-env NODE_ENV=production node -r dotenv/config dist/"
   },
   "private": true,
   "repository": {
@@ -29,10 +29,10 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx}": [
+    "**/*.{js,jsx}": [
       "npm run lint"
     ],
-    "**/*.{md,yml,json,babelrc,eslintrc,prettierrc}": [
+    "**/*.{md,yml,json,babelrc,eslintrc}": [
       "prettier --write"
     ]
   },
@@ -42,8 +42,10 @@
     "@shopify/koa-shopify-auth": "^3.1.70",
     "@shopify/koa-shopify-webhooks": "^2.5.0",
     "@shopify/polaris": "^5.3.1",
+    "isomorphic-fetch": "^3.0.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
+    "koa-helmet": "^5.2.0",
     "koa-router": "^9.4.0",
     "koa-session": "^6.0.0",
     "next": "^9.5.3",
@@ -57,13 +59,8 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
-    "@tsconfig/node12": "^1.0.7",
-    "@types/koa": "^2.11.4",
-    "@types/node": "^14.11.2",
-    "@types/react": "^16.9.49",
-    "@typescript-eslint/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/parser": "^4.2.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
     "eslint": "^7.9.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
@@ -72,7 +69,6 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "husky": "^4.3.0",
     "npm-run-all": "^4.1.5",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.3"
+    "prettier": "^2.1.2"
   }
 }
