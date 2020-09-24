@@ -4,7 +4,9 @@
   "description": "Route optimization for Shopify local deliveries.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:src": "eslint . --fix --ext .ts,tsx -c .eslintrc.json",
+    "lint:types": "tsc",
+    "lint": "npm-run-all lint:*"
   },
   "private": true,
   "repository": {
@@ -46,6 +48,8 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.1",
     "eslint-plugin-react-hooks": "^4.1.2",
+    "husky": "^4.3.0",
+    "npm-run-all": "^4.1.5",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   }
