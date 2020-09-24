@@ -4,6 +4,9 @@
   "description": "Route optimization for Shopify local deliveries.",
   "main": "index.js",
   "scripts": {
+    "build:next": "next build",
+    "build:server": "babel server --out-dir dist --extensions \".ts\"",
+    "build": "npm-run-all build:*",
     "lint:src": "eslint . --fix --ext .ts,tsx -c .eslintrc.json",
     "lint:types": "tsc",
     "lint": "npm-run-all lint:*"
@@ -20,6 +23,19 @@
     "url": "https://github.com/MlkMahmud/quicker-routes/issues"
   },
   "homepage": "https://github.com/MlkMahmud/quicker-routes#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "npm run lint"
+    ],
+    "**/*.{md,yml,json,babelrc,eslintrc,prettierrc}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@shopify/app-bridge": "^1.27.2",
     "@shopify/app-bridge-react": "^1.27.2",
@@ -36,6 +52,12 @@
     "shopify-api-node": "^3.4.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
     "@tsconfig/node12": "^1.0.7",
     "@types/koa": "^2.11.4",
     "@types/node": "^14.11.2",
