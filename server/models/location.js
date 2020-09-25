@@ -8,7 +8,7 @@ const schema = new Schema({
     default: true,
   },
   latLng: String,
-  shop: { type: String, ref: 'Shop' },
+  shop: String,
 });
 
 export default model('Location', schema);

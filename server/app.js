@@ -4,6 +4,7 @@ import bodyParser from 'koa-bodyparser';
 import helmet from 'koa-helmet';
 import session from 'koa-session';
 import createShopifyAuth, { verifyRequest } from '@shopify/koa-shopify-auth';
+import router from './routes';
 import { saveShop } from './controllers';
 
 const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY } = process.env;
@@ -41,5 +42,7 @@ app.use(
 
 app.use(verifyRequest());
 app.use(bodyParser());
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 export default app;

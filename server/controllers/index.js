@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import Shopify from 'shopify-api-node';
 import mongoose from 'mongoose';
 import { Location, Shop } from '../models';
@@ -43,4 +42,10 @@ export async function saveShop(shopName, accessToken) {
     await Location.insertMany(locations, { session });
     await session.commitTransaction();
   }
+}
+
+export async function getShopData(shopName) {
+  const { _id, balance } = await Shop.findById(shopName);
+  const locations = await Location.find({ shop: shopName });
+  return { _id, balance, locations };
 }
