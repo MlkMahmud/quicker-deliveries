@@ -49,6 +49,7 @@
     "koa-helmet": "^5.2.0",
     "koa-router": "^9.4.0",
     "koa-session": "^6.0.0",
+    "mongoose": "^5.10.7",
     "next": "^9.5.3",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
