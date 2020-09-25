@@ -7,6 +7,7 @@ import enTranslations from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/dist/styles.css';
 import cookie from 'js-cookie';
 import PropTypes from 'prop-types';
+import { Store } from '../store';
 
 const config = {
   apiKey: process.env.API_KEY,
@@ -22,7 +23,9 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Provider config={config}>
         <AppProvider i18n={enTranslations}>
-          <Component {...pageProps} />
+          <Store pageProps={pageProps}>
+            <Component {...pageProps} />
+          </Store>
         </AppProvider>
       </Provider>
     </>
