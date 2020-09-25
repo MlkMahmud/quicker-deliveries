@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import next from 'next';
 import path from 'path';
 import app from './app';
@@ -7,9 +8,14 @@ const dev = process.env.NODE_ENV === 'development';
 const server = next({ dev, dir: path.join(__dirname, '..') });
 const handle = server.getRequestHandler();
 
-server
-  .prepare()
-  .then(() => {
+(async function main() {
+  try {
+    await server.prepare();
+    await mongoose.connect(process.env.DB_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+
     app.use(async (ctx) => {
       await handle(ctx.req, ctx.res);
       ctx.respond = false;
@@ -20,8 +26,8 @@ server
       if (err) throw err;
       console.log(`> Ready on localhost:${port} - env ${process.env.NODE_ENV}`);
     });
-  })
-  .catch((e) => {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
     process.exit(1);
-  });
+  }
+}());
