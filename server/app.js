@@ -36,7 +36,6 @@ app.use(
       });
       try {
         await baseController.saveShop(shop, accessToken);
-        console.log(ctx.path);
         ctx.redirect('/');
       } catch (e) {
         // Redirect to an error page handled by next
