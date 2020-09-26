@@ -6,6 +6,7 @@ const Context = createContext({});
 const initialState = {
   showToast: false,
   toast: {},
+  isTopUpModalOpen: false,
 };
 
 export const Store = ({ children, pageProps }) => {

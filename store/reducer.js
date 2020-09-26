@@ -1,5 +1,15 @@
 const reducer = (state, { type, payload }) => {
   switch (type) {
+    case 'OPEN TOPUP':
+      return {
+        ...state,
+        isTopUpModalOpen: true,
+      };
+    case 'CLOSE TOPUP':
+      return {
+        ...state,
+        isTopUpModalOpen: false,
+      };
     case 'DEBIT':
       return {
         ...state,
