@@ -5,7 +5,7 @@ import helmet from 'koa-helmet';
 import session from 'koa-session';
 import createShopifyAuth, { verifyRequest } from '@shopify/koa-shopify-auth';
 import router from './routes';
-import { saveShop } from './controllers';
+import { baseController } from './controllers';
 
 const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY } = process.env;
 const app = new Koa();
@@ -34,8 +34,14 @@ app.use(
         secure: true,
         sameSite: 'none',
       });
-      await saveShop(shop, accessToken);
-      ctx.redirect('/');
+      try {
+        await baseController.saveShop(shop, accessToken);
+        console.log(ctx.path);
+        ctx.redirect('/');
+      } catch (e) {
+        // Redirect to an error page handled by next
+        console.error(e);
+      }
     },
   }),
 );
