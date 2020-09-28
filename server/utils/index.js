@@ -21,6 +21,19 @@ query {
 }
 `;
 
+export const CREATE_CHARGE = (price) => {
+  const returnUrl = `${process.env.BASE_URL}/charge`;
+  return `mutation {
+      appPurchaseOneTimeCreate(name: "Top-up available balance", returnUrl: "${returnUrl}", price: { amount: ${price}, currencyCode: USD }, test: true) {
+        appPurchaseOneTime {
+          id
+        }
+        confirmationUrl  
+        }
+      }
+    `;
+};
+
 export function parseLocations(locations, shop) {
   return locations
     .filter(({ node }) => {
