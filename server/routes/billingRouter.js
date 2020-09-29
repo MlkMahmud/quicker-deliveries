@@ -2,15 +2,15 @@ import Router from 'koa-router';
 import { billingController } from '../controllers';
 
 const billingRouter = new Router();
-const { createCharge, verifyCharge } = billingController;
+const { createCharge, getCharge, topUpBalance } = billingController;
 
 billingRouter
   .get('/charge', async (ctx) => {
     const { shop, accessToken } = ctx.session;
     const { charge_id: id } = ctx.query;
-    const paymentIsVerified = await verifyCharge(shop, accessToken, id);
-    if (paymentIsVerified) {
-      // update user's balance
+    const { price, status } = await getCharge(shop, accessToken, id);
+    if (status === 'active') {
+      await topUpBalance(shop, +price);
     }
     ctx.redirect('/');
   })

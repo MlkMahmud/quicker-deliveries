@@ -1,4 +1,5 @@
 import Shopify from 'shopify-api-node';
+import { Shop } from '../models';
 import { CREATE_CHARGE } from '../utils';
 
 async function createCharge(shopName, accessToken, price) {
@@ -8,15 +9,18 @@ async function createCharge(shopName, accessToken, price) {
   return charge;
 }
 
-async function verifyCharge(shopName, accessToken, id) {
+async function getCharge(shopName, accessToken, id) {
   const shopify = new Shopify({ shopName, accessToken });
   const charge = await shopify.applicationCharge.get(id);
-  console.log(JSON.stringify(charge));
-  const { status } = charge;
-  return status === 'active';
+  return charge;
+}
+
+async function topUpBalance(shop, price) {
+  await Shop.findByIdAndUpdate(shop, { $inc: { balance: price } });
 }
 
 export default {
   createCharge,
-  verifyCharge,
+  getCharge,
+  topUpBalance,
 };

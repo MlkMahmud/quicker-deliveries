@@ -8,7 +8,7 @@ async function saveShop(shopName, accessToken) {
     const locations = await getLocations(shopName, accessToken);
     const session = await mongoose.startSession();
     session.startTransaction();
-    await Shop.create([{ _id: shopName, balance: 0.3 }], { session });
+    await Shop.create([{ _id: shopName }], { session });
     await Location.insertMany(locations, { session });
     await session.commitTransaction();
   }

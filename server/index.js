@@ -14,6 +14,7 @@ const handle = server.getRequestHandler();
     await mongoose.connect(process.env.DB_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useFindAndModify: false,
     });
 
     app.use(async (ctx) => {
