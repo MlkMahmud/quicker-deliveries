@@ -10,6 +10,16 @@ const reducer = (state, { type, payload }) => {
         ...state,
         isTopUpModalOpen: false,
       };
+    case 'OPEN ADD LOCATION':
+      return {
+        ...state,
+        isAddLocationOpen: true,
+      };
+    case 'CLOSE ADD LOCATION':
+      return {
+        ...state,
+        isAddLocationOpen: false,
+      };
     case 'DEBIT':
       return {
         ...state,

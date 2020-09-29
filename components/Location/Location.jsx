@@ -1,15 +1,19 @@
 import React from 'react';
 import { Card, Select } from '@shopify/polaris';
 import { useStore } from '../../store';
+import AddLocation from './AddLocation';
 
 export default () => {
   const { dispatch, state } = useStore();
-  const { locations, start, stop } = state;
+  const {
+    isAddLocationOpen, locations, start, stop,
+  } = state;
   return (
     <>
       <Card
         actions={{
           content: 'Add Location',
+          onAction: () => dispatch({ type: 'OPEN ADD LOCATION' }),
         }}
         sectioned
         title="Start/End of Route"
@@ -37,6 +41,7 @@ export default () => {
           />
         </div>
       </Card>
+      {isAddLocationOpen && <AddLocation />}
     </>
   );
 };

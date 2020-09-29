@@ -37,6 +37,7 @@
     ]
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.1.9",
     "@shopify/app-bridge": "^1.27.2",
     "@shopify/app-bridge-react": "^1.27.2",
     "@shopify/koa-shopify-auth": "^3.1.70",
@@ -54,6 +55,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-places-autocomplete": "^7.3.0",
     "shopify-api-node": "^3.4.4",
     "styled-components": "^5.2.0"
   },

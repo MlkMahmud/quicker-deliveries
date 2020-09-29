@@ -7,6 +7,7 @@ const initialState = {
   showToast: false,
   toast: {},
   isTopUpModalOpen: false,
+  isAddLocationOpen: false,
 };
 
 export const Store = ({ children, pageProps }) => {
