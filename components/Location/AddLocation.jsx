@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import { Modal, Spinner } from '@shopify/polaris';
-import PlacesAutocomplete from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import {
   Dropdown,
   Input,
@@ -13,7 +13,7 @@ import { useStore } from '../../store';
 
 export default () => {
   const [address, updateAddress] = useState('');
-  const [isLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const {
     dispatch,
     state: { isAddLocationOpen },
@@ -22,8 +22,45 @@ export default () => {
   const closeModal = () => {
     if (!isLoading) {
       dispatch({
-        type: 'CLOSE ADD LOCATION',
+        type: 'CLOSE_ADD_LOCATION',
       });
+    }
+  };
+
+  const handleSubmit = async (value) => {
+    try {
+      setLoading(true);
+      const [result] = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(result);
+      const response = await fetch('/location', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          address,
+          latLng: `${lat},${lng}`,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch({
+          type: 'ADD_LOCATION',
+          payload: {
+            label: data.address,
+            value: data.latLng,
+            message: 'Successfully added location',
+            error: false,
+          },
+        });
+      } else throw new Error(response.statusText);
+    } catch (error) {
+      dispatch({
+        type: 'ERROR',
+        payload: {
+          message: 'Failed to add location',
+          error: true,
+        },
+      });
+      setLoading(false);
     }
   };
 
@@ -37,9 +74,9 @@ export default () => {
         accessibilityLabel: 'save location',
         loading: isLoading,
         disabled: isLoading,
-        // onAction: () => {
-        //   handleSubmit(address);
-        // },
+        onAction: () => {
+          handleSubmit(address);
+        },
       }}
     >
       <Modal.Section>

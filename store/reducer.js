@@ -1,21 +1,21 @@
 const reducer = (state, { type, payload }) => {
   switch (type) {
-    case 'OPEN TOPUP':
+    case 'OPEN_TOPUP':
       return {
         ...state,
         isTopUpModalOpen: true,
       };
-    case 'CLOSE TOPUP':
+    case 'CLOSE_TOPUP':
       return {
         ...state,
         isTopUpModalOpen: false,
       };
-    case 'OPEN ADD LOCATION':
+    case 'OPEN_ADD_LOCATION':
       return {
         ...state,
         isAddLocationOpen: true,
       };
-    case 'CLOSE ADD LOCATION':
+    case 'CLOSE_ADD_LOCATION':
       return {
         ...state,
         isAddLocationOpen: false,
@@ -25,7 +25,7 @@ const reducer = (state, { type, payload }) => {
         ...state,
         balance: state.balance - payload,
       };
-    case 'ADD LOCATION':
+    case 'ADD_LOCATION':
       return {
         ...state,
         locations: [
@@ -40,18 +40,19 @@ const reducer = (state, { type, payload }) => {
           message: payload.message,
           error: payload.error,
         },
+        isAddLocationOpen: false,
       };
-    case 'UPDATE START':
+    case 'UPDATE_START':
       return {
         ...state,
         start: payload,
       };
-    case 'UPDATE STOP':
+    case 'UPDATE_STOP':
       return {
         ...state,
         stop: payload,
       };
-    case 'DISMISS TOAST':
+    case 'DISMISS_TOAST':
       return {
         ...state,
         showToast: false,

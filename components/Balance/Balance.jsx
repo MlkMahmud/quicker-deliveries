@@ -33,7 +33,7 @@ export default () => {
             </p>
             <Stack>
               <ButtonGroup>
-                <Button onClick={() => dispatch({ type: 'OPEN TOPUP' })} primary>
+                <Button onClick={() => dispatch({ type: 'OPEN_TOPUP' })} primary>
                   Top-up balance
                 </Button>
                 <a href="/">Learn more</a>

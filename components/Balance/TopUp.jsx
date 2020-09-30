@@ -37,7 +37,7 @@ export default () => {
 
   const dismissModal = () => {
     if (isLoading) return;
-    dispatch({ type: 'CLOSE TOPUP' });
+    dispatch({ type: 'CLOSE_TOPUP' });
   };
 
   return (

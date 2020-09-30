@@ -13,7 +13,7 @@ export default () => {
       <Card
         actions={{
           content: 'Add Location',
-          onAction: () => dispatch({ type: 'OPEN ADD LOCATION' }),
+          onAction: () => dispatch({ type: 'OPEN_ADD_LOCATION' }),
         }}
         sectioned
         title="Start/End of Route"
@@ -26,7 +26,7 @@ export default () => {
             name="start"
             options={locations}
             value={start}
-            onChange={(payload) => dispatch({ type: 'UPDATE START', payload })}
+            onChange={(payload) => dispatch({ type: 'UPDATE_START', payload })}
           />
         </div>
         <div>
@@ -37,7 +37,7 @@ export default () => {
             name="end"
             options={locations}
             value={stop}
-            onChange={(payload) => dispatch({ type: 'UPDATE STOP', payload })}
+            onChange={(payload) => dispatch({ type: 'UPDATE_STOP', payload })}
           />
         </div>
       </Card>

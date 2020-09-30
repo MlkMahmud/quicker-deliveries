@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 } from 'uuid';
 import { Location, Shop } from '../models';
 import { getLocations } from '../utils';
 
@@ -20,7 +21,19 @@ async function getShopData(shopName) {
   return { _id, balance, locations };
 }
 
+async function addNewLocation(shop, location) {
+  const { address, latLng } = location;
+  const newLocation = await Location.create({
+    _id: v4(),
+    address,
+    latLng,
+    shop,
+  });
+  return newLocation;
+}
+
 export default {
+  addNewLocation,
   getShopData,
   saveShop,
 };
