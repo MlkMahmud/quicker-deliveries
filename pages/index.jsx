@@ -1,19 +1,26 @@
 import React from 'react';
 import { Page, Layout } from '@shopify/polaris';
-import { Balance, Location } from '../components';
+import { Balance, Location, Toast } from '../components';
+import { useStore } from '../store';
 
-export default () => (
-  <Page>
-    <Layout>
-      <Layout.Section oneHalf>
-        <Balance />
-      </Layout.Section>
-      <Layout.Section oneHalf>
-        <Location />
-      </Layout.Section>
-    </Layout>
-  </Page>
-);
+export default () => {
+  const { state: { showToast } } = useStore();
+  return (
+    <>
+      <Page>
+        <Layout>
+          <Layout.Section oneHalf>
+            <Balance />
+          </Layout.Section>
+          <Layout.Section oneHalf>
+            <Location />
+          </Layout.Section>
+        </Layout>
+      </Page>
+      {showToast && <Toast />}
+    </>
+  );
+};
 
 export async function getServerSideProps({ query, req }) {
   const { shop } = query;

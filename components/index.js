@@ -1,5 +1,6 @@
-export { default as Balance } from './Balance/Balance';
-export { default as Location } from './Location/Location';
+export { default as Balance } from './Balance';
+export { default as Location } from './Location';
+export { default as Toast } from './Toast';
 export {
   Dropdown,
   Input,
