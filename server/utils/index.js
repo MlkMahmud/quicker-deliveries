@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Shopify from 'shopify-api-node';
 
 const GET_ORDERS_QUERY = `
@@ -61,4 +62,42 @@ export async function getLocations(shopName, accessToken) {
     locations: { edges },
   } = await shopify.graphql(query);
   return parseLocations(edges, shopName);
+}
+
+function formatShippingAddress(address) {
+  if (!address) return '';
+  const {
+    address1, address2, city, province, zip, country,
+  } = address;
+  return [address1, address2, city, province, zip, country]
+    .filter((item) => item)
+    .join(', ');
+}
+
+function formatCustomerName(customer) {
+  if (!customer) return '';
+  return [customer.first_name, customer.last_name]
+    .filter((name) => name)
+    .join(' ');
+}
+
+export function parseOrders(orders) {
+  return orders.map(({
+    id, name, customer, shipping_address,
+  }) => {
+    let addressVerified;
+    if (!shipping_address) {
+      addressVerified = false;
+    } else {
+      const { latitude, longitude } = shipping_address;
+      addressVerified = (latitude !== null && longitude !== null);
+    }
+    return {
+      id,
+      name,
+      customer: formatCustomerName(customer),
+      address: formatShippingAddress(shipping_address),
+      latLng: addressVerified ? `${shipping_address.latitude},${shipping_address.longitude}` : null,
+    };
+  });
 }

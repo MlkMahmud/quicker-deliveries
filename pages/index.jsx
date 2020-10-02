@@ -1,10 +1,14 @@
 import React from 'react';
 import { Page, Layout } from '@shopify/polaris';
-import { Balance, Location, Toast } from '../components';
+import {
+  Balance, Location, Orders, Toast,
+} from '../components';
 import { useStore } from '../store';
 
 export default () => {
-  const { state: { showToast } } = useStore();
+  const {
+    state: { showToast },
+  } = useStore();
   return (
     <>
       <Page>
@@ -16,6 +20,8 @@ export default () => {
             <Location />
           </Layout.Section>
         </Layout>
+        <div style={{ margin: '10px 0' }} />
+        <Orders />
       </Page>
       {showToast && <Toast />}
     </>

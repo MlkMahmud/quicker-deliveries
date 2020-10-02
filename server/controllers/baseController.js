@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import Shopify from 'shopify-api-node';
 import { v4 } from 'uuid';
 import { Location, Shop } from '../models';
-import { getLocations } from '../utils';
+import { getLocations, parseOrders } from '../utils';
 
 async function saveShop(shopName, accessToken) {
   const shop = await Shop.findById(shopName);
@@ -32,8 +33,28 @@ async function addNewLocation(shop, location) {
   return newLocation;
 }
 
+async function getOrders(shopName, accessToken, cursor) {
+  const shopify = new Shopify({ shopName, accessToken });
+  const params = {
+    limit: 2,
+    status: 'open',
+    fields: ['id', 'name', 'customer', 'shipping_address'],
+  };
+  if (cursor) {
+    params.page_info = cursor;
+    delete params.status;
+  }
+  const data = await shopify.order.list(params);
+  const nextPageParameters = data.nextPageParameters?.page_info;
+  return {
+    nextPageParameters,
+    orders: parseOrders(data),
+  };
+}
+
 export default {
   addNewLocation,
+  getOrders,
   getShopData,
   saveShop,
 };

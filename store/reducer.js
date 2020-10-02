@@ -52,6 +52,23 @@ const reducer = (state, { type, payload }) => {
         ...state,
         stop: payload,
       };
+    case 'UPDATE_ORDERS':
+      return {
+        ...state,
+        orders: [...state.orders, ...payload.orders],
+        currentPage: state.currentPage + 1,
+        nextPageParameters: payload.nextPageParameters,
+      };
+    case 'UPDATE_CURRENT_PAGE':
+      return {
+        ...state,
+        currentPage: state.currentPage + payload,
+      };
+    case 'UPDATE_WAYPOINTS':
+      return {
+        ...state,
+        waypoints: payload,
+      };
     case 'DISMISS_TOAST':
       return {
         ...state,

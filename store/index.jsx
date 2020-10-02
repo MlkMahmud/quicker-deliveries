@@ -4,10 +4,15 @@ import reducer from './reducer';
 
 const Context = createContext({});
 const initialState = {
+  currentPage: 0,
+  isAddLocationOpen: false,
+  isTopUpModalOpen: false,
+  isWayConfirmationOpen: false,
+  nextPageParameters: '',
+  orders: [],
   showToast: false,
   toast: {},
-  isTopUpModalOpen: false,
-  isAddLocationOpen: false,
+  waypoints: [],
 };
 
 export const Store = ({ children, pageProps }) => {
