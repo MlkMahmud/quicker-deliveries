@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Pagination, ResourceList, TextStyle } from '@shopify/polaris';
+import {
+  Card, Pagination, ResourceList, TextStyle,
+} from '@shopify/polaris';
 import cookie from 'js-cookie';
 import EmptyState from './EmptyState';
 import { useStore } from '../../store';
 
 const MAX_ORDERS_PER_PAGE = 25;
+const MAX_ORDERS_PER_ROUTE = 20;
 
 const renderItem = (item) => {
-  const { id, name, address, customer, latLng } = item;
+  const {
+    id, name, address, customer, latLng,
+  } = item;
   return (
     <ResourceList.Item
       id={id}
@@ -21,7 +26,9 @@ const renderItem = (item) => {
       ]}
     >
       <b>
-        {customer} {name}
+        {customer}
+        {' '}
+        {name}
       </b>
       <div>{address}</div>
       {!latLng && (
@@ -37,7 +44,9 @@ export default () => {
   const [isLoading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const { dispatch, state } = useStore();
-  const { currentPage, initialLoadErrored, nextPageParameters, orders } = state;
+  const {
+    currentPage, initialLoadErrored, nextPageParameters, orders,
+  } = state;
   const stopIndex = currentPage * MAX_ORDERS_PER_PAGE;
   const startIndex = currentPage ? stopIndex - MAX_ORDERS_PER_PAGE : 0;
   const items = orders.slice(startIndex, stopIndex);
@@ -90,6 +99,35 @@ export default () => {
     getPage();
   }, []);
 
+  const updateSelected = (selectedItems) => {
+    const itemCount = selectedItems.length;
+    if (itemCount <= MAX_ORDERS_PER_ROUTE) {
+      const newestSelection = itemCount > 0
+        ? orders.find(({ id }) => id === selectedItems[itemCount - 1])
+        : undefined;
+
+      if (!itemCount || (newestSelection && newestSelection.latLng)) {
+        setSelected(selectedItems);
+      } else {
+        dispatch({
+          type: 'ERROR',
+          payload: {
+            error: true,
+            message: 'Cannot assign unverified addresses',
+          },
+        });
+      }
+    } else {
+      dispatch({
+        type: 'ERROR',
+        payload: {
+          error: true,
+          message: `Cannot assign more than ${MAX_ORDERS_PER_ROUTE} orders per route`,
+        },
+      });
+    }
+  };
+
   const setWaypoints = () => {
     try {
       const selectedOrders = orders.filter(({ id, latLng }) => {
@@ -118,15 +156,12 @@ export default () => {
     <>
       <Card>
         <ResourceList
-          emptyState={(
-            <EmptyState
-              error={initialLoadErrored}
-              handleClick={getPage}
-            />
-          )}
-          items={[]}
+          emptyState={
+            <EmptyState error={initialLoadErrored} handleClick={getPage} />
+          }
+          items={items}
           loading={isLoading}
-          onSelectionChange={setSelected}
+          onSelectionChange={updateSelected}
           promotedBulkActions={[
             {
               content: 'Generate Route',

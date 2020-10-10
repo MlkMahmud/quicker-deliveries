@@ -18,7 +18,7 @@ const EmptyState = ({ error, handleClick }) => {
           >
             Uh Oh!
           </p>
-          <p style={{ marginBottom: '10px' }}>We seem to have run into some issues</p>
+          <p style={{ marginBottom: '10px' }}>We seem to have run into some network issues</p>
           <div style={{ marginBottom: '20px' }}>
             <Button primary onClick={handleClick}>Reload orders</Button>
           </div>
