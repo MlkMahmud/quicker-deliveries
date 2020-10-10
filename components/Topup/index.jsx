@@ -8,7 +8,7 @@ export default () => {
   const [amount, setAmount] = useState(0);
   const [isLoading, setisLoading] = useState(false);
   const app = useContext(Context);
-  const { dispatch, state: { isTopUpModalOpen } } = useStore();
+  const { dispatch, state: { isTopupOpen } } = useStore();
 
   const confirmPayment = async (price) => {
     try {
@@ -42,7 +42,7 @@ export default () => {
 
   return (
     <Modal
-      open={isTopUpModalOpen}
+      open={isTopupOpen}
       onClose={dismissModal}
       title="Top-up balance"
       primaryAction={{

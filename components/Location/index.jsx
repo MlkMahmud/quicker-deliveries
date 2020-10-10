@@ -1,12 +1,11 @@
 import React from 'react';
 import { Card, Select } from '@shopify/polaris';
 import { useStore } from '../../store';
-import AddLocation from './AddLocation';
 
 export default () => {
   const { dispatch, state } = useStore();
   const {
-    isAddLocationOpen, locations, start, stop,
+    locations, start, stop,
   } = state;
   return (
     <>
@@ -41,7 +40,6 @@ export default () => {
           />
         </div>
       </Card>
-      {isAddLocationOpen && <AddLocation />}
     </>
   );
 };

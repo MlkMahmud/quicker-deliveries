@@ -1,14 +1,24 @@
 import React from 'react';
 import { Page, Layout } from '@shopify/polaris';
 import {
-  Balance, Location, Orders, Toast,
+  AddLocation,
+  Balance,
+  Location,
+  Orders,
+  RouteConfirmation,
+  Toast,
+  Topup,
 } from '../components';
 import { useStore } from '../store';
 
 export default () => {
+  const { state } = useStore();
   const {
-    state: { showToast },
-  } = useStore();
+    isAddLocationOpen,
+    isTopupOpen,
+    showRouteConfirmation,
+    showToast,
+  } = state;
   return (
     <>
       <Page>
@@ -23,6 +33,9 @@ export default () => {
         <div style={{ margin: '10px 0' }} />
         <Orders />
       </Page>
+      {isAddLocationOpen && <AddLocation />}
+      {isTopupOpen && <Topup />}
+      {showRouteConfirmation && <RouteConfirmation />}
       {showToast && <Toast />}
     </>
   );

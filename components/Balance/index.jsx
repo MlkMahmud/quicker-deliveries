@@ -7,11 +7,10 @@ import {
   Stack,
 } from '@shopify/polaris';
 import { useStore } from '../../store';
-import TopUp from './TopUp';
 
 export default () => {
   const { state, dispatch } = useStore();
-  const { balance, isTopUpModalOpen } = state;
+  const { balance } = state;
   return (
     <>
       <Card>
@@ -20,7 +19,7 @@ export default () => {
             Available balance: $
             {balance}
           </Heading>
-)}
+        )}
         >
           <Stack vertical spacing="loose">
             <p>
@@ -42,7 +41,6 @@ export default () => {
           </Stack>
         </Card.Section>
       </Card>
-      {isTopUpModalOpen && <TopUp />}
     </>
   );
 };

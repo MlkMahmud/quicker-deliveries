@@ -3,12 +3,12 @@ const reducer = (state, { type, payload }) => {
     case 'OPEN_TOPUP':
       return {
         ...state,
-        isTopUpModalOpen: true,
+        isTopupOpen: true,
       };
     case 'CLOSE_TOPUP':
       return {
         ...state,
-        isTopUpModalOpen: false,
+        isTopupOpen: false,
       };
     case 'OPEN_ADD_LOCATION':
       return {
@@ -19,6 +19,11 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         isAddLocationOpen: false,
+      };
+    case 'CLOSE_ROUTE_CONFIRMATION':
+      return {
+        ...state,
+        showRouteConfirmation: false,
       };
     case 'DEBIT':
       return {
@@ -74,6 +79,7 @@ const reducer = (state, { type, payload }) => {
       return {
         ...state,
         waypoints: payload,
+        showRouteConfirmation: true,
       };
     case 'DISMISS_TOAST':
       return {
