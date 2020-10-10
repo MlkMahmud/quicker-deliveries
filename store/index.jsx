@@ -5,6 +5,7 @@ import reducer from './reducer';
 const Context = createContext({});
 const initialState = {
   currentPage: 0,
+  initialLoadErrored: false,
   isAddLocationOpen: false,
   isTopUpModalOpen: false,
   isWayConfirmationOpen: false,

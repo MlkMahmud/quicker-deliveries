@@ -36,7 +36,7 @@ async function addNewLocation(shop, location) {
 async function getOrders(shopName, accessToken, cursor) {
   const shopify = new Shopify({ shopName, accessToken });
   const params = {
-    limit: 2,
+    limit: 25,
     status: 'open',
     fields: ['id', 'name', 'customer', 'shipping_address'],
   };

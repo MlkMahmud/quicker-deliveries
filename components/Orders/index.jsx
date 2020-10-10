@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Card,
-  Pagination,
-  ResourceList,
-  TextStyle,
-} from '@shopify/polaris';
+import { Card, Pagination, ResourceList, TextStyle } from '@shopify/polaris';
 import cookie from 'js-cookie';
+import EmptyState from './EmptyState';
 import { useStore } from '../../store';
 
-const MAX_ORDERS_PER_PAGE = 2;
+const MAX_ORDERS_PER_PAGE = 25;
+
 const renderItem = (item) => {
-  const {
-    id, name, address, customer, latLng,
-  } = item;
+  const { id, name, address, customer, latLng } = item;
   return (
     <ResourceList.Item
       id={id}
@@ -26,9 +21,7 @@ const renderItem = (item) => {
       ]}
     >
       <b>
-        {customer}
-        {' '}
-        {name}
+        {customer} {name}
       </b>
       <div>{address}</div>
       {!latLng && (
@@ -41,11 +34,10 @@ const renderItem = (item) => {
 };
 
 export default () => {
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [selected, setSelected] = useState([]);
   const { dispatch, state } = useStore();
-  const { currentPage, nextPageParameters, orders } = state;
-
+  const { currentPage, initialLoadErrored, nextPageParameters, orders } = state;
   const stopIndex = currentPage * MAX_ORDERS_PER_PAGE;
   const startIndex = currentPage ? stopIndex - MAX_ORDERS_PER_PAGE : 0;
   const items = orders.slice(startIndex, stopIndex);
@@ -74,16 +66,22 @@ export default () => {
             type: 'UPDATE_ORDERS',
             payload: { ...data },
           });
-        } else throw Error(response.statusText);
+        } else throw new Error(response.statusText);
       }
     } catch (e) {
-      dispatch({
-        type: 'ERROR',
-        payload: {
-          message: 'Failed to fetch orders',
-          error: true,
-        },
-      });
+      if (!currentPage) {
+        dispatch({
+          type: 'INITIAL_LOAD_ERRORED',
+        });
+      } else {
+        dispatch({
+          type: 'ERROR',
+          payload: {
+            message: 'Failed to fetch orders',
+            error: true,
+          },
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -120,7 +118,13 @@ export default () => {
     <>
       <Card>
         <ResourceList
-          items={items}
+          emptyState={(
+            <EmptyState
+              error={initialLoadErrored}
+              handleClick={getPage}
+            />
+          )}
+          items={[]}
           loading={isLoading}
           onSelectionChange={setSelected}
           promotedBulkActions={[
@@ -137,14 +141,16 @@ export default () => {
           selectedItems={selected}
           totalItemsCount={orders.length}
         />
-        <div style={{ textAlign: 'center', padding: '10px 0' }}>
-          <Pagination
-            onNext={getPage}
-            onPrevious={() => getPage('previous')}
-            hasNext={!isLoading && hasNext}
-            hasPrevious={!isLoading && hasPrevious}
-          />
-        </div>
+        {orders.length ? (
+          <div style={{ textAlign: 'center', padding: '10px 0' }}>
+            <Pagination
+              onNext={getPage}
+              onPrevious={() => getPage('previous')}
+              hasNext={!isLoading && hasNext}
+              hasPrevious={!isLoading && hasPrevious}
+            />
+          </div>
+        ) : null}
       </Card>
     </>
   );

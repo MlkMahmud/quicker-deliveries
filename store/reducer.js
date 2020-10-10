@@ -58,11 +58,17 @@ const reducer = (state, { type, payload }) => {
         orders: [...state.orders, ...payload.orders],
         currentPage: state.currentPage + 1,
         nextPageParameters: payload.nextPageParameters,
+        initialLoadErrored: false,
       };
     case 'UPDATE_CURRENT_PAGE':
       return {
         ...state,
         currentPage: state.currentPage + payload,
+      };
+    case 'INITIAL_LOAD_ERRORED':
+      return {
+        ...state,
+        initialLoadErrored: true,
       };
     case 'UPDATE_WAYPOINTS':
       return {
