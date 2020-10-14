@@ -16,7 +16,7 @@ export default () => {
   const [isLoading, setLoading] = useState(false);
   const {
     dispatch,
-    state: { isAddLocationOpen },
+    state: { showAddLocation },
   } = useStore();
 
   const closeModal = () => {
@@ -66,7 +66,7 @@ export default () => {
 
   return (
     <Modal
-      open={isAddLocationOpen}
+      open={showAddLocation}
       onClose={closeModal}
       title="Add custom location"
       primaryAction={{

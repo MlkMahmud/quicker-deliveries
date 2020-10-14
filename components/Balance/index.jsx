@@ -17,7 +17,7 @@ export default () => {
         <Card.Section title={(
           <Heading>
             Available balance: $
-            {balance}
+            {Number(balance).toFixed(2)}
           </Heading>
         )}
         >

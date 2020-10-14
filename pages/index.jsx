@@ -1,24 +1,20 @@
 import React from 'react';
 import { Page, Layout } from '@shopify/polaris';
+import dynamic from 'next/dynamic';
 import {
-  AddLocation,
   Balance,
   Location,
   Orders,
-  RouteConfirmation,
-  Toast,
-  Topup,
 } from '../components';
 import { useStore } from '../store';
 
+const AddLocation = dynamic(() => import('../components/AddLocation'));
+const RouteConfirmation = dynamic(() => import('../components/RouteConfirmation'));
+const Topup = dynamic(() => import('../components/Topup'));
+const Toast = dynamic(() => import('../components/Toast'));
+
 export default () => {
   const { state } = useStore();
-  const {
-    isAddLocationOpen,
-    isTopupOpen,
-    showRouteConfirmation,
-    showToast,
-  } = state;
   return (
     <>
       <Page>
@@ -33,10 +29,10 @@ export default () => {
         <div style={{ margin: '10px 0' }} />
         <Orders />
       </Page>
-      {isAddLocationOpen && <AddLocation />}
-      {isTopupOpen && <Topup />}
-      {showRouteConfirmation && <RouteConfirmation />}
-      {showToast && <Toast />}
+      {state.showAddLocation && <AddLocation />}
+      {state.showTopup && <Topup />}
+      {state.showRouteConfirmation && <RouteConfirmation />}
+      {state.showToast && <Toast />}
     </>
   );
 };
