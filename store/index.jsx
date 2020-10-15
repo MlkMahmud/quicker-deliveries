@@ -5,12 +5,13 @@ import reducer from './reducer';
 const Context = createContext({});
 const initialState = {
   currentPage: 0,
+  deliveryRouteUrl: '',
   initialLoadErrored: false,
-  isAddLocationOpen: false,
-  isTopupOpen: false,
-  isWayConfirmationOpen: false,
   nextPageParameters: '',
   orders: [],
+  showAddLocation: false,
+  showTopup: false,
+  showDeliveryRoute: false,
   showRouteConfirmation: false,
   showToast: false,
   toast: {},

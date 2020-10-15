@@ -84,7 +84,7 @@ export default () => {
         });
       } else {
         dispatch({
-          type: 'ERROR',
+          type: 'SHOW_TOAST',
           payload: {
             message: 'Failed to fetch orders',
             error: true,
@@ -110,7 +110,7 @@ export default () => {
         setSelected(selectedItems);
       } else {
         dispatch({
-          type: 'ERROR',
+          type: 'SHOW_TOAST',
           payload: {
             error: true,
             message: 'Cannot assign unverified addresses',
@@ -119,7 +119,7 @@ export default () => {
       }
     } else {
       dispatch({
-        type: 'ERROR',
+        type: 'SHOW_TOAST',
         payload: {
           error: true,
           message: `Cannot assign more than ${MAX_ORDERS_PER_ROUTE} orders per route`,
@@ -143,7 +143,7 @@ export default () => {
       });
     } catch (e) {
       dispatch({
-        type: 'ERROR',
+        type: 'SHOW_TOAST',
         payload: {
           message: e.message,
           error: true,

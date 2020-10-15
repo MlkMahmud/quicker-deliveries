@@ -3,32 +3,41 @@ const reducer = (state, { type, payload }) => {
     case 'OPEN_TOPUP':
       return {
         ...state,
-        isTopupOpen: true,
+        showTopup: true,
       };
     case 'CLOSE_TOPUP':
       return {
         ...state,
-        isTopupOpen: false,
+        showTopup: false,
       };
     case 'OPEN_ADD_LOCATION':
       return {
         ...state,
-        isAddLocationOpen: true,
+        showAddLocation: true,
       };
     case 'CLOSE_ADD_LOCATION':
       return {
         ...state,
-        isAddLocationOpen: false,
+        showAddLocation: false,
       };
     case 'CLOSE_ROUTE_CONFIRMATION':
       return {
         ...state,
         showRouteConfirmation: false,
       };
-    case 'DEBIT':
+    case 'SET_ROUTE_URL':
       return {
         ...state,
-        balance: state.balance - payload,
+        balance: state.balance - payload.cost,
+        showDeliveryRoute: true,
+        showRouteConfirmation: false,
+        deliveryRouteUrl: payload.routeUrl,
+      };
+    case 'UNSET_ROUTE_URL':
+      return {
+        ...state,
+        showDeliveryRoute: false,
+        deliveryRouteUrl: '',
       };
     case 'ADD_LOCATION':
       return {
@@ -45,7 +54,7 @@ const reducer = (state, { type, payload }) => {
           message: payload.message,
           error: payload.error,
         },
-        isAddLocationOpen: false,
+        showAddLocation: false,
       };
     case 'UPDATE_START':
       return {
@@ -87,7 +96,7 @@ const reducer = (state, { type, payload }) => {
         showToast: false,
         toast: {},
       };
-    case 'ERROR':
+    case 'SHOW_TOAST':
       return {
         ...state,
         showToast: true,
