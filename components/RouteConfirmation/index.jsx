@@ -33,16 +33,18 @@ export default () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          start,
-          stop,
+          origin: start,
+          destination: stop,
           waypoints: waypoints.map(({ latLng }) => latLng),
         }),
       });
       if (response.ok) {
-        const data = await response.json();
+        const { routeUrl } = await response.json();
         dispatch({
           type: 'SET_ROUTE_URL',
-          payload: data,
+          payload: {
+            routeUrl,
+          },
         });
       } else throw new Error('Failed to generate route');
     } catch (e) {
