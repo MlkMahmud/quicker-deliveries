@@ -3,6 +3,7 @@ import Shopify from 'shopify-api-node';
 import { v4 } from 'uuid';
 import { Location, Shop } from '../models';
 import { getLocations, parseOrders } from '../utils';
+import { bitly, googleMaps } from '../lib';
 
 async function saveShop(shopName, accessToken) {
   const shop = await Shop.findById(shopName);
@@ -52,9 +53,25 @@ async function getOrders(shopName, accessToken, cursor) {
   };
 }
 
+async function getRouteUrl({
+  origin, destination, waypoints,
+}) {
+  const { generateRouteUrl, getOptimizedWaypointOrder } = googleMaps;
+  const waypointOrder = await getOptimizedWaypointOrder({
+    origin, destination, waypoints,
+  });
+  const longUrl = await generateRouteUrl({
+    origin, destination, waypoints, waypointOrder,
+  });
+
+  const shortUrl = await bitly.shortenUrl(longUrl);
+  return shortUrl;
+}
+
 export default {
   addNewLocation,
   getOrders,
+  getRouteUrl,
   getShopData,
   saveShop,
 };

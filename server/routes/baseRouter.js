@@ -2,7 +2,9 @@ import Router from 'koa-router';
 import { baseController } from '../controllers';
 
 const baseRouter = new Router();
-const { addNewLocation, getOrders, getShopData } = baseController;
+const {
+  addNewLocation, getOrders, getRouteUrl, getShopData,
+} = baseController;
 
 baseRouter.get('/shop', async (ctx) => {
   const { shop } = ctx.session;
@@ -25,6 +27,14 @@ baseRouter.get('/orders', async (ctx) => {
   const orders = await getOrders(shop, accessToken, cursor);
   ctx.status = 200;
   ctx.body = JSON.stringify(orders);
+});
+
+baseRouter.post('/route', async (ctx) => {
+  const { origin, destination, waypoints } = ctx.request.body;
+  const routeUrl = await getRouteUrl({ origin, destination, waypoints });
+  // deduct balance here
+  ctx.status = 200;
+  ctx.body = JSON.stringify({ routeUrl });
 });
 
 export default baseRouter;
