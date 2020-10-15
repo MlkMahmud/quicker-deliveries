@@ -9,6 +9,7 @@ import {
 import { useStore } from '../store';
 
 const AddLocation = dynamic(() => import('../components/AddLocation'));
+const DeliveryRoute = dynamic(() => import('../components/DeliveryRoute'));
 const RouteConfirmation = dynamic(() => import('../components/RouteConfirmation'));
 const Topup = dynamic(() => import('../components/Topup'));
 const Toast = dynamic(() => import('../components/Toast'));
@@ -30,6 +31,7 @@ export default () => {
         <Orders />
       </Page>
       {state.showAddLocation && <AddLocation />}
+      {state.showDeliveryRoute && <DeliveryRoute />}
       {state.showTopup && <Topup />}
       {state.showRouteConfirmation && <RouteConfirmation />}
       {state.showToast && <Toast />}
