@@ -1,6 +1,7 @@
-/* eslint-disable camelcase */
 import Shopify from 'shopify-api-node';
+import { Shop } from '../models';
 
+const COST_PER_WAYPOINT = 0.02;
 const GET_ORDERS_QUERY = `
 query {
   locations(first:10, query:"active:true") {
@@ -100,4 +101,20 @@ export function parseOrders(orders) {
       latLng: addressVerified ? `${shipping_address.latitude},${shipping_address.longitude}` : null,
     };
   });
+}
+
+export async function topUpBalance(shop, price) {
+  await Shop.findByIdAndUpdate(shop, { $inc: { balance: price } });
+}
+
+export async function deductBalance(shop, price) {
+  const { balance } = await Shop.findByIdAndUpdate(shop, { $inc: { balance: price } }, {
+    new: true,
+  });
+  return balance;
+}
+
+export function getTotalCost(waypoints) {
+  const uniqueWaypointsPoints = [...new Set(waypoints)];
+  return uniqueWaypointsPoints.length * COST_PER_WAYPOINT;
 }

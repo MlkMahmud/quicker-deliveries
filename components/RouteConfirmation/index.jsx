@@ -39,18 +39,16 @@ export default () => {
         }),
       });
       if (response.ok) {
-        const { routeUrl } = await response.json();
+        const data = await response.json();
         dispatch({
           type: 'SET_ROUTE_URL',
-          payload: {
-            routeUrl,
-          },
+          payload: { ...data },
         });
       } else throw new Error('Failed to generate route');
     } catch (e) {
       setLoading(false);
       dispatch({
-        type: 'ERROR',
+        type: 'SHOW_TOAST',
         payload: {
           error: true,
           message: e.message,

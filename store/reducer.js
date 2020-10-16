@@ -28,7 +28,7 @@ const reducer = (state, { type, payload }) => {
     case 'SET_ROUTE_URL':
       return {
         ...state,
-        balance: state.balance - payload.cost,
+        balance: payload.balance,
         showDeliveryRoute: true,
         showRouteConfirmation: false,
         deliveryRouteUrl: payload.routeUrl,

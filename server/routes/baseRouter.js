@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import { baseController } from '../controllers';
+import { deductBalance, getTotalCost } from '../utils';
 
 const baseRouter = new Router();
 const {
@@ -30,11 +31,13 @@ baseRouter.get('/orders', async (ctx) => {
 });
 
 baseRouter.post('/route', async (ctx) => {
+  const { shop } = ctx.session;
   const { origin, destination, waypoints } = ctx.request.body;
   const routeUrl = await getRouteUrl({ origin, destination, waypoints });
-  // deduct balance here
+  const totalCost = getTotalCost(waypoints);
+  const balance = await deductBalance(shop, -totalCost);
   ctx.status = 200;
-  ctx.body = JSON.stringify({ routeUrl });
+  ctx.body = JSON.stringify({ balance, routeUrl });
 });
 
 export default baseRouter;

@@ -1,8 +1,9 @@
 import Router from 'koa-router';
 import { billingController } from '../controllers';
+import { topUpBalance } from '../utils';
 
 const billingRouter = new Router();
-const { createCharge, getCharge, topUpBalance } = billingController;
+const { createCharge, getCharge } = billingController;
 
 billingRouter
   .get('/charge', async (ctx) => {

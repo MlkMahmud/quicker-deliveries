@@ -28,7 +28,7 @@ async function generateRouteUrl({
   for (let i = 0, len = waypoints.length; i < len; i += 1) {
     optimizedWaypoints.push(waypoints[waypointOrder[i]]);
   }
-  if (waypoints.length <= 3) {
+  if (waypoints.length <= 7) {
     const params = {
       api: 1,
       origin,
