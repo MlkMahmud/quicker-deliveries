@@ -14,7 +14,7 @@ export default () => {
     waypoints,
   } = state;
 
-  const totalCost = (waypoints.length * 0.02).toFixed(2);
+  const totalCost = (waypoints.length * 0.02);
   const insufficientFunds = balance < totalCost;
   const startLabel = locations.find(({ value }) => value === start).label;
   const stopLabel = locations.find(({ value }) => value === stop).label;
@@ -103,9 +103,13 @@ export default () => {
         </Modal.Section>
       )}
       {insufficientFunds && (
-        <div style={{ margin: '10px  0' }}>
+        <div style={{
+          margin: '10px  0',
+          padding: '0 2rem',
+        }}
+        >
           <TextStyle variation="negative">
-            {`You need $${totalCost} to complete this action. Please top-up your available balance to continue.`}
+            {`You need $${totalCost.toFixed(2)} to complete this action. Please top-up your available balance to continue.`}
           </TextStyle>
         </div>
       )}
