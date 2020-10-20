@@ -38,8 +38,8 @@ app.use(
         await baseController.saveShop(shop, accessToken);
         ctx.redirect('/');
       } catch (e) {
-        // Redirect to an error page handled by next
-        console.error(e);
+        ctx.redirect('/installation-error');
+        // log error to Sentry
       }
     },
   }),
