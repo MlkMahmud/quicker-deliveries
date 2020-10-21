@@ -6,9 +6,21 @@ import session from 'koa-session';
 import createShopifyAuth, { verifyRequest } from '@shopify/koa-shopify-auth';
 import router from './routes';
 import { baseController } from './controllers';
+import { Sentry } from './lib';
 
-const { SHOPIFY_API_SECRET, SHOPIFY_API_KEY } = process.env;
+const {
+  SHOPIFY_API_SECRET, SHOPIFY_API_KEY,
+} = process.env;
 const app = new Koa();
+
+app.on('error', (err, ctx) => {
+  Sentry.withScope((scope) => {
+    scope.addEventProcessor((event) => (
+      Sentry.Handlers.parseRequest(event, ctx.request)
+    ));
+    Sentry.captureException(err);
+  });
+});
 
 app.use(async (ctx, next) => {
   try {
@@ -38,8 +50,8 @@ app.use(
         await baseController.saveShop(shop, accessToken);
         ctx.redirect('/');
       } catch (e) {
+        Sentry.captureException(e);
         ctx.redirect('/installation-error');
-        // log error to Sentry
       }
     },
   }),

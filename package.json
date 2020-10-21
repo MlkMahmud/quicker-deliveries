@@ -42,6 +42,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@googlemaps/google-maps-services-js": "^3.1.9",
+    "@sentry/browser": "^5.27.0",
+    "@sentry/node": "^5.27.0",
     "@shopify/app-bridge": "^1.27.2",
     "@shopify/app-bridge-react": "^1.27.2",
     "@shopify/koa-shopify-auth": "^3.1.70",

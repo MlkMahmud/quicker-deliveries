@@ -15,7 +15,7 @@ const config = {
   forceRedirect: true,
 };
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, err }) {
   return (
     <>
       <Head>
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }) {
       <Provider config={config}>
         <AppProvider i18n={enTranslations}>
           <Store pageProps={pageProps}>
-            <Component {...pageProps} />
+            <Component {...pageProps} err={err} />
           </Store>
         </AppProvider>
       </Provider>
@@ -32,7 +32,12 @@ export default function App({ Component, pageProps }) {
   );
 }
 
+App.defaultProps = {
+  err: null,
+};
+
 App.propTypes = {
+  err: PropTypes.shape(),
   Component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
   pageProps: PropTypes.shape().isRequired,
 };
