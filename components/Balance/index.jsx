@@ -28,7 +28,7 @@ export default () => {
               costs $0.02
             </p>
             <p>
-              <b>Note: The maximum number of orders per delivery route is 18</b>
+              <b>Note: The maximum number of stops per delivery route is 18</b>
             </p>
             <Stack>
               <ButtonGroup>

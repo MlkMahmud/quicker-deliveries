@@ -7,7 +7,7 @@ import EmptyState from './EmptyState';
 import { useStore } from '../../store';
 
 const MAX_ORDERS_PER_PAGE = 25;
-const MAX_ORDERS_PER_ROUTE = 20;
+const MAX_STOPS_PER_ROUTE = 18;
 
 const renderItem = (item) => {
   const {
@@ -101,7 +101,7 @@ export default () => {
 
   const updateSelected = (selectedItems) => {
     const itemCount = selectedItems.length;
-    if (itemCount <= MAX_ORDERS_PER_ROUTE) {
+    if (itemCount <= MAX_STOPS_PER_ROUTE) {
       const newestSelection = itemCount > 0
         ? orders.find(({ id }) => id === selectedItems[itemCount - 1])
         : undefined;
@@ -122,7 +122,7 @@ export default () => {
         type: 'SHOW_TOAST',
         payload: {
           error: true,
-          message: `Cannot assign more than ${MAX_ORDERS_PER_ROUTE} orders per route`,
+          message: `Cannot assign more than ${MAX_STOPS_PER_ROUTE} stops per route`,
         },
       });
     }
