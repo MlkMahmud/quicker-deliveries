@@ -47,7 +47,7 @@ app.use(
         sameSite: 'none',
       });
       try {
-        await baseController.saveShop(shop, accessToken);
+        await baseController.onInstall(shop, accessToken);
         ctx.redirect('/');
       } catch (e) {
         Sentry.captureException(e);

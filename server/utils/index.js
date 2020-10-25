@@ -26,7 +26,7 @@ query {
 export const CREATE_CHARGE = (price) => {
   const returnUrl = `${process.env.BASE_URL}/charge`;
   return `mutation {
-      appPurchaseOneTimeCreate(name: "Top-up available balance", returnUrl: "${returnUrl}", price: { amount: ${price}, currencyCode: USD }, test: true) {
+      appPurchaseOneTimeCreate(name: "Top-up available balance", returnUrl: "${returnUrl}", price: { amount: ${price}, currencyCode: USD }) {
         appPurchaseOneTime {
           id
         }
@@ -44,11 +44,9 @@ export function parseLocations(locations, shop) {
     })
     .map(({ node }) => {
       const {
-        id,
         address: { formatted, longitude, latitude },
       } = node;
       return {
-        _id: id,
         address: formatted.join(', '),
         latLng: `${latitude},${longitude}`,
         shop,
@@ -104,11 +102,11 @@ export function parseOrders(orders) {
 }
 
 export async function topUpBalance(shop, price) {
-  await Shop.findByIdAndUpdate(shop, { $inc: { balance: price } });
+  await Shop.findOneAndUpdate({ name: shop }, { $inc: { balance: price } });
 }
 
 export async function deductBalance(shop, price) {
-  const { balance } = await Shop.findByIdAndUpdate(shop, { $inc: { balance: price } }, {
+  const { balance } = await Shop.findOneAndUpdate({ name: shop }, { $inc: { balance: price } }, {
     new: true,
   });
   return balance;
@@ -117,4 +115,8 @@ export async function deductBalance(shop, price) {
 export function getTotalCost(waypoints) {
   const uniqueWaypointsPoints = [...new Set(waypoints)];
   return uniqueWaypointsPoints.length * COST_PER_WAYPOINT;
+}
+
+export function isArchivedShop(shop) {
+  return !shop.endsWith('.myshopify.com');
 }
