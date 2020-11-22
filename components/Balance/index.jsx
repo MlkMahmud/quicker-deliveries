@@ -28,14 +28,13 @@ export default () => {
               costs $0.02
             </p>
             <p>
-              <b>Note: The maximum number of stops per delivery route is 18</b>
+              <b>Note: The maximum number of stops per delivery route is 13</b>
             </p>
             <Stack>
               <ButtonGroup>
                 <Button onClick={() => dispatch({ type: 'OPEN_TOPUP' })} primary>
                   Top-up balance
                 </Button>
-                <a href="/">Learn more</a>
               </ButtonGroup>
             </Stack>
           </Stack>

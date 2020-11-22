@@ -7,7 +7,7 @@ import EmptyState from './EmptyState';
 import { useStore } from '../../store';
 
 const MAX_ORDERS_PER_PAGE = 25;
-const MAX_STOPS_PER_ROUTE = 18;
+const MAX_STOPS_PER_ROUTE = 13;
 
 const renderItem = (item) => {
   const {
