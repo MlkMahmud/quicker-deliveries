@@ -4,7 +4,12 @@
   "description": "Route optimization for Shopify local deliveries.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:next": "next build",
+    "build:server": "babel server --out-dir dist",
+    "build": "npm-run-all build:*",
+    "dev": "cross-env NODE_ENV=development babel-node -r dotenv/config server/",
+    "lint": "eslint . --fix --ext .js,jsx -c .eslintrc.json",
+    "start": "cross-env NODE_ENV=production node -r dotenv/config dist/"
   },
   "private": true,
   "repository": {
@@ -17,5 +22,70 @@
   "bugs": {
     "url": "https://github.com/MlkMahmud/quicker-routes/issues"
   },
-  "homepage": "https://github.com/MlkMahmud/quicker-routes#readme"
+  "homepage": "https://github.com/MlkMahmud/quicker-routes#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx}": [
+      "npm run lint"
+    ],
+    "**/*.{md,yml,json,babelrc,eslintrc}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@googlemaps/google-maps-services-js": "^3.1.9",
+    "@sentry/browser": "^5.27.0",
+    "@sentry/node": "^5.27.0",
+    "@shopify/app-bridge": "^1.27.2",
+    "@shopify/app-bridge-react": "^1.27.2",
+    "@shopify/koa-shopify-auth": "^3.1.70",
+    "@shopify/koa-shopify-webhooks": "^2.5.0",
+    "@shopify/polaris": "^5.3.1",
+    "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
+    "isomorphic-fetch": "^3.0.0",
+    "js-cookie": "^2.2.1",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-helmet": "^5.2.0",
+    "koa-router": "^9.4.0",
+    "koa-session": "^6.0.0",
+    "mongoose": "^5.10.7",
+    "next": "^9.5.5",
+    "node-fetch": "^2.6.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-places-autocomplete": "^7.3.0",
+    "shopify-api-node": "^3.4.4",
+    "styled-components": "^5.2.0",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.9.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.21.1",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2",
+    "prop-types": "^15.7.2"
+  }
 }
