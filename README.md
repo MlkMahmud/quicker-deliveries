@@ -1,2 +1,2 @@
 # quicker-deliveries
-Route optimization for all your Shopify local delivery needs.
+Route optimization for Shopify local deliveries.
